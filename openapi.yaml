@@ -1,0 +1,118 @@
+openapi: 3.0.0
+info:
+  title: RailMe API
+  version: 1.0.0
+  description: API for booking and retrieving user travel data.
+servers:
+  - url: http://localhost:3000
+paths:
+  /:
+    get:
+      summary: Health check
+      description: Returns a simple Hello World message.
+      responses:
+        '200':
+          description: OK
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: Hello World1
+
+  /login:
+    post:
+      summary: Create a new booking
+      description: Adds a new user booking to the system.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - name
+                - destination
+                - age
+                - nameOfNextOfKin
+                - phoneNumberOfNextKin
+              properties:
+                name:
+                  type: string
+                  example: John Doe
+                destination:
+                  type: string
+                  example: Lagos
+                age:
+                  type: integer
+                  example: 28
+                nameOfNextOfKin:
+                  type: string
+                  example: Jane Doe
+                phoneNumberOfNextKin:
+                  type: integer
+                  example: 1234567890
+      responses:
+        '201':
+          description: Booking created successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Booking status booked successfully
+        '400':
+          description: Missing fields
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: All fields are required
+        '500':
+          description: Internal server error
+
+  /users:
+    get:
+      summary: Get all users
+      description: Returns all stored user bookings.
+      responses:
+        '200':
+          description: List of users
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    name:
+                      type: string
+                    destination:
+                      type: string
+                    age:
+                      type: integer
+                    nameOfNextOfKin:
+                      type: string
+                    phoneNumberOfNextKin:
+                      type: integer
+        '500':
+          description: Failed to retrieve booking
+
+  /total:
+    get:
+      summary: Get total number of users
+      description: Returns the total count of stored user bookings.
+      responses:
+        '200':
+          description: Total user count
+          content:
+            application/json:
+              schema:
+                type: integer
+                example: 5
+        '500':
+          description: Failed to retrieve booking
