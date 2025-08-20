@@ -1,118 +1,154 @@
-openapi: 3.0.0
-info:
-  title: RailMe API
-  version: 1.0.0
-  description: API for booking and retrieving user travel data.
-servers:
-  - url: http://localhost:3000
-paths:
-  /:
-    get:
-      summary: Health check
-      description: Returns a simple Hello World message.
-      responses:
-        '200':
-          description: OK
-          content:
-            text/plain:
-              schema:
-                type: string
-                example: Hello World1
-
-  /login:
-    post:
-      summary: Create a new booking
-      description: Adds a new user booking to the system.
-      requestBody:
-        required: true
+/users:
+  get:
+    summary: Get all users (from MongoDB)
+    description: Returns all stored user bookings directly from MongoDB.
+    responses:
+      '200':
+        description: List of users
         content:
           application/json:
             schema:
-              type: object
-              required:
-                - name
-                - destination
-                - age
-                - nameOfNextOfKin
-                - phoneNumberOfNextKin
-              properties:
-                name:
-                  type: string
-                  example: John Doe
-                destination:
-                  type: string
-                  example: Lagos
-                age:
-                  type: integer
-                  example: 28
-                nameOfNextOfKin:
-                  type: string
-                  example: Jane Doe
-                phoneNumberOfNextKin:
-                  type: integer
-                  example: 1234567890
-      responses:
-        '201':
-          description: Booking created successfully
-          content:
-            application/json:
-              schema:
+              type: array
+              items:
                 type: object
                 properties:
-                  message:
+                  _id:
                     type: string
-                    example: Booking status booked successfully
-        '400':
-          description: Missing fields
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  message:
+                  name:
                     type: string
-                    example: All fields are required
-        '500':
-          description: Internal server error
-
-  /users:
-    get:
-      summary: Get all users
-      description: Returns all stored user bookings.
-      responses:
-        '200':
-          description: List of users
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  type: object
-                  properties:
-                    name:
-                      type: string
-                    destination:
-                      type: string
-                    age:
-                      type: integer
-                    nameOfNextOfKin:
-                      type: string
-                    phoneNumberOfNextKin:
-                      type: integer
-        '500':
-          description: Failed to retrieve booking
-
-  /total:
-    get:
-      summary: Get total number of users
-      description: Returns the total count of stored user bookings.
-      responses:
-        '200':
-          description: Total user count
-          content:
-            application/json:
-              schema:
-                type: integer
-                example: 5
-        '500':
-          description: Failed to retrieve booking
+                  destination:
+                    type: string
+                  age:
+                    type: integer
+                  nameOfNextOfKin:
+                    type: string
+                  phoneNumberOfNextKin:
+                    type: integer
+                  createdAt:
+                    type: string
+                    format: date-time
+                  updatedAt:
+                    type: string
+                    format: date-time
+                  __v:
+                    type: integer
+            examples:
+              Example1:
+                summary: User booking - Adefisa Babatunde
+                value:
+                  _id: 68a4cc0801ce370ca2937bd6
+                  name: Adefisa Babatunde
+                  destination: Kano State
+                  age: 18
+                  nameOfNextOfKin: Sola
+                  createdAt: 2025-08-19T19:10:00.677Z
+                  updatedAt: 2025-08-19T19:10:00.677Z
+                  __v: 0
+              Example2:
+                summary: User booking - Adefisa Babatunde
+                value:
+                  _id: 68a4cedd75a2789fd8c175d6
+                  name: Adefisa Babatunde
+                  destination: Kano State
+                  age: 18
+                  nameOfNextOfKin: Sola
+                  phoneNumberOfNextKin: 8116358044
+                  createdAt: 2025-08-19T19:22:05.522Z
+                  updatedAt: 2025-08-19T19:22:05.522Z
+                  __v: 0
+              Example3:
+                summary: User booking - Adefisa Babatunde
+                value:
+                  _id: 68a4d31475a2789fd8c175d8
+                  name: Adefisa Babatunde
+                  destination: Kano State
+                  age: 18
+                  nameOfNextOfKin: Sola
+                  phoneNumberOfNextKin: 8116358044
+                  createdAt: 2025-08-19T19:40:04.428Z
+                  updatedAt: 2025-08-19T19:40:04.428Z
+                  __v: 0
+              Example4:
+                summary: User booking - Adefisa Babatunde
+                value:
+                  _id: 68a4d35aa6da93e62c90fd15
+                  name: Adefisa Babatunde
+                  destination: Kano State
+                  age: 18
+                  nameOfNextOfKin: Sola
+                  phoneNumberOfNextKin: 8116358044
+                  createdAt: 2025-08-19T19:41:14.795Z
+                  updatedAt: 2025-08-19T19:41:14.795Z
+                  __v: 0
+              Example5:
+                summary: User booking - Adefisa Babatunde
+                value:
+                  _id: 68a4d60ea6da93e62c90fd17
+                  name: Adefisa Babatunde
+                  destination: Kano State
+                  age: 18
+                  nameOfNextOfKin: Sola
+                  phoneNumberOfNextKin: 8116358044
+                  createdAt: 2025-08-19T19:52:46.292Z
+                  updatedAt: 2025-08-19T19:52:46.292Z
+                  __v: 0
+              Example6:
+                summary: User booking - Ayoola James
+                value:
+                  _id: 68a508e40756528053dc8e9e
+                  name: Ayoola James
+                  destination: Niger State
+                  age: 22
+                  nameOfNextOfKin: Bimpe
+                  phoneNumberOfNextKin: 8116358044
+                  createdAt: 2025-08-19T23:29:40.428Z
+                  updatedAt: 2025-08-19T23:29:40.428Z
+                  __v: 0
+              Example7:
+                summary: User booking - Sola Kazeem
+                value:
+                  _id: 68a5094f0756528053dc8ea0
+                  name: sola kazeem
+                  destination: Bauchi State
+                  age: 25
+                  nameOfNextOfKin: Bimpe
+                  phoneNumberOfNextKin: 8116358044
+                  createdAt: 2025-08-19T23:31:27.395Z
+                  updatedAt: 2025-08-19T23:31:27.395Z
+                  __v: 0
+              Example8:
+                summary: User booking - Boluwatife Eleyele
+                value:
+                  _id: 68a509af0756528053dc8ea2
+                  name: Boluwatife Eleyele
+                  destination: Borno State
+                  age: 24
+                  nameOfNextOfKin: Peter
+                  phoneNumberOfNextKin: 8116358044
+                  createdAt: 2025-08-19T23:33:03.519Z
+                  updatedAt: 2025-08-19T23:33:03.519Z
+                  __v: 0
+              Example9:
+                summary: User booking - Peter Eleyele
+                value:
+                  _id: 68a509d60756528053dc8ea4
+                  name: Peter Eleyele
+                  destination: Kebbi State
+                  age: 24
+                  nameOfNextOfKin: Boluwatife
+                  phoneNumberOfNextKin: 8116358044
+                  createdAt: 2025-08-19T23:33:42.062Z
+                  updatedAt: 2025-08-19T23:33:42.062Z
+                  __v: 0
+              Example10:
+                summary: User booking - Peter Eleyele
+                value:
+                  _id: 68a50aab0756528053dc8ea6
+                  name: Peter Eleyele
+                  destination: Kebbi State
+                  age: 24
+                  nameOfNextOfKin: Boluwatife
+                  phoneNumberOfNextKin: 8116358044
+                  createdAt: 2025-08-19T23:37:15.302Z
+                  updatedAt: 2025-08-19T23:37:15.302Z
+                  __v: 0
